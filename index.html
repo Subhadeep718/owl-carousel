@@ -1,1 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nested Carousel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .parent-carousel {
+            width: 300px;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+            position: relative;
+        }
+
+        .child-carousel {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .item {
+            min-width: 300px;
+            background-color: #f0f0f0;
+            border-right: 1px solid #ccc;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent-carousel">
+        <div class="child-carousel">
+            <div class="item">1-1</div>
+            <div class="item">1-2</div>
+            <div class="item">1-3</div>
+            <!-- Add more items as needed -->
+        </div>
+    </div>
+    <div class="parent-carousel">
+        <div class="child-carousel">
+            <div class="item">2-1</div>
+            <div class="item">2-2</div>
+            <div class="item">2-3</div>
+            <!-- Add more items as needed -->
+        </div>
+    </div>
+    <div class="parent-carousel">
+        <div class="child-carousel">
+            <div class="item">3-1</div>
+            <div class="item">3-2</div>
+            <div class="item">3-3</div>
+            <!-- Add more items as needed -->
+        </div>
+    </div>
+
+    <script src="scripts.js">
+        document.addEventListener("DOMContentLoaded", function () {
+            const parentCarousels = document.querySelectorAll('.parent-carousel');
+            let currentParentIndex = 0;
+
+            function showNextChildCarousel() {
+                const currentParent = parentCarousels[currentParentIndex];
+                const childCarousel = currentParent.querySelector('.child-carousel');
+                const items = childCarousel.querySelectorAll('.item');
+                let currentIndex = 0;
+
+                function showNextItem() {
+                    if (currentIndex < items.length) {
+                        childCarousel.style.transform = `translateX(-${currentIndex * 300}px)`;
+                        currentIndex++;
+                        setTimeout(showNextItem, 2000); // Adjust the timing as needed
+                    } else {
+                        currentIndex = 0;
+                        currentParentIndex = (currentParentIndex + 1) % parentCarousels.length;
+                        showNextChildCarousel();
+                    }
+                }
+
+                showNextItem();
+            }
+
+            showNextChildCarousel();
+        });
+
+    </script>
+</body>
+
+</html>
