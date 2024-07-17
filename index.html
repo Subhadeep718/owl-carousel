@@ -4,102 +4,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nested Carousel</title>
+    <title>Double Carousel</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
+        .carousel-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
         }
 
-        .parent-carousel {
-            width: 300px;
-            overflow: hidden;
+        .carousel {
+            width: 80%;
             margin: 20px 0;
-            border: 1px solid #ccc;
-            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
         }
 
-        .child-carousel {
-            display: flex;
-            transition: transform 0.5s ease;
+        .carousel-item {
+            display: inline-block;
+            padding: 10px;
+            background: #f1f1f1;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
 
-        .item {
-            min-width: 300px;
-            background-color: #f0f0f0;
-            border-right: 1px solid #ccc;
-            text-align: center;
-            padding: 20px;
-            box-sizing: border-box;
+        .carousel-item.active {
+            background: #007bff;
+            color: #fff;
         }
     </style>
 </head>
 
 <body>
-    <div class="parent-carousel">
-        <div class="child-carousel">
-            <div class="item">1-1</div>
-            <div class="item">1-2</div>
-            <div class="item">1-3</div>
-            <!-- Add more items as needed -->
+    <div class="carousel-container">
+        <div id="carousel-column-c" class="carousel">
+            <!-- Column C Items will be displayed here -->
         </div>
-    </div>
-    <div class="parent-carousel">
-        <div class="child-carousel">
-            <div class="item">2-1</div>
-            <div class="item">2-2</div>
-            <div class="item">2-3</div>
-            <!-- Add more items as needed -->
-        </div>
-    </div>
-    <div class="parent-carousel">
-        <div class="child-carousel">
-            <div class="item">3-1</div>
-            <div class="item">3-2</div>
-            <div class="item">3-3</div>
-            <!-- Add more items as needed -->
+        <div id="carousel-column-b" class="carousel">
+            <!-- Column B Items will be displayed here -->
         </div>
     </div>
 
-    <script src="scripts.js">
-        document.addEventListener("DOMContentLoaded", function () {
-            const parentCarousels = document.querySelectorAll('.parent-carousel');
-            let currentParentIndex = 0;
+    <script>
+        const data = [
+            {
+                c: "Server",
+                b: [
+                    { name: "HPE", img: "path/to/hpe.jpg" },
+                    { name: "DELL", img: "path/to/dell.jpg" },
+                    { name: "Lenovo", img: "path/to/lenovo.jpg" }
+                ]
+            },
+            {
+                c: "Desktop",
+                b: [
+                    { name: "Assembled", img: "path/to/assembled.jpg" },
+                    { name: "Acer", img: "path/to/acer.jpg" },
+                    { name: "Asus", img: "path/to/asus.jpg" }
+                ]
+            },
+            {
+                c: "Laptop",
+                b: [
+                    { name: "Apple", img: "path/to/apple.jpg" },
+                    { name: "Microsoft Surface", img: "path/to/microsoft_surface.jpg" },
+                    { name: "Fujitsu", img: "path/to/fujitsu.jpg" },
+                    { name: "Samsung", img: "path/to/samsung.jpg" },
+                    { name: "LG", img: "path/to/lg.jpg" }
+                ]
+            },
+            // Add other rows similarly with images
+        ];
 
-            function showNextChildCarousel() {
-                const currentParent = parentCarousels[currentParentIndex];
-                const childCarousel = currentParent.querySelector('.child-carousel');
-                const items = childCarousel.querySelectorAll('.item');
-                let currentIndex = 0;
+        let currentIndex = 0;
+        const cCarousel = document.getElementById('carousel-column-c');
+        const bCarousel = document.getElementById('carousel-column-b');
 
-                function showNextItem() {
-                    if (currentIndex < items.length) {
-                        childCarousel.style.transform = `translateX(-${currentIndex * 300}px)`;
-                        currentIndex++;
-                        setTimeout(showNextItem, 2000); // Adjust the timing as needed
-                    } else {
-                        currentIndex = 0;
-                        currentParentIndex = (currentParentIndex + 1) % parentCarousels.length;
-                        showNextChildCarousel();
-                    }
-                }
+        function displayItems(index) {
+            const currentData = data[index];
+            cCarousel.innerHTML = <div class="carousel-item active">${currentData.c}</div>;
+            bCarousel.innerHTML = currentData.b.map(item => `
+        <div class="carousel-item">
+            <img src="${item.img}" alt="${item.name}">
+            <p>${item.name}</p>
+        </div>
+    `).join('');
+        }
 
-                showNextItem();
-            }
+        function next() {
+            currentIndex = (currentIndex + 1) % data.length;
+            displayItems(currentIndex);
+        }
 
-            showNextChildCarousel();
-        });
+        function startCarousel() {
+            displayItems(currentIndex);
+            setInterval(next, 3000); // Change item every 3 seconds
+        }
+
+        document.addEventListener('DOMContentLoaded', startCarousel);
 
     </script>
 </body>
