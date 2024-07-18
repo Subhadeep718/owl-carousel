@@ -4,295 +4,230 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Double Carousel</title>
- <style>
-    .carousel-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    <style>
+        .carousel-container {
+            display: none; /* Initially hide all containers */
+            flex-direction: column;
+            align-items: center;
+        }
 
-.carousel {
-    width: 80%;
-    margin: 20px 0;
-    overflow: hidden;
-    white-space: nowrap;
-}
+        .carousel {
+            width: 80%;
+            margin: 20px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
 
-.carousel-item {
-    display: inline-block;
-    padding: 10px;
-    background: #f1f1f1;
-    margin-right: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
+        .carousel-item {
+            display: inline-block;
+            padding: 10px;
+            background: #f1f1f1;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
 
-.carousel-item.active {
-    background: #007bff;
-    color: #fff;
-}
+        .carousel-item.active {
+            background: #007bff;
+            color: #fff;
+        }
 
+        @media only screen and (max-width: 1299px) {
+            #Desktop {
+                display: flex;
+            }
+        }
 
+        @media only screen and (max-width: 768px) {
+            #Desktop {
+                display: none;
+            }
+            #Laptop {
+                display: flex;
+            }
+        }
 
-@media only screen and (max-width: 1299px) {
-    #Desktop{
-        display: flex;
-    }
-    #laptop{
-        display: none;
-    }
-    #mobile{
-        display: none;
-    }
-}
-@media only screen and (max-width: 768px) {
-    #Desktop{
-        display: none;
-    }
-    #laptop{
-        display: flex;
-    }
-    #mobile{
-        display: none;
-    }
-}
-@media only screen and (max-width: 576px) {
-    #Desktop{
-        display: none;
-    }
-    #laptop{
-        display: none;
-    }
-    #mobile{
-        display: flex;
-    }
-}
-
-
-
- </style>
+        @media only screen and (max-width: 576px) {
+            #Desktop, #Laptop {
+                display: none;
+            }
+            #mobile {
+                display: flex;
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="Desktop" class="carousel-container">
-        <div id="carousel-column-A" class="carousel">
-            <!-- Column C Items will be displayed here -->
-        </div>
-        <div id="carousel-column-a" class="carousel">
-            <!-- Column B Items will be displayed here -->
-        </div>
+        <div id="carousel-column-A" class="carousel"></div>
+        <div id="carousel-column-a" class="carousel"></div>
     </div>
-
+    
     <div id="Laptop" class="carousel-container">
-        <div id="carousel-column-B" class="carousel">
-            <!-- Column C Items will be displayed here -->
-        </div>
-        <div id="carousel-column-b" class="carousel">
-            <!-- Column B Items will be displayed here -->
-        </div>
+        <div id="carousel-column-B" class="carousel"></div>
+        <div id="carousel-column-b" class="carousel"></div>
     </div>
-
+    
     <div id="mobile" class="carousel-container">
-        <div id="carousel-column-C" class="carousel">
-            <!-- Column C Items will be displayed here -->
-        </div>
-        <div id="carousel-column-c" class="carousel">
-            <!-- Column B Items will be displayed here -->
-        </div>
+        <div id="carousel-column-C" class="carousel"></div>
+        <div id="carousel-column-c" class="carousel"></div>
     </div>
-
+    
     <script>
-   const dataA = [
-    {
-        c: "Server",
-        b: [
-            { name: "HPE", img: "path/to/hpe.jpg" },
-            { name: "DELL", img: "path/to/dell.jpg" },
-            { name: "Lenovo", img: "path/to/lenovo.jpg" }
-        ]
-    },
-    {
-        c: "Desktop",
-        b: [
-            { name: "Assembled", img: "path/to/assembled.jpg" },
-            { name: "Acer", img: "path/to/acer.jpg" },
-            { name: "Asus", img: "path/to/asus.jpg" }
-        ]
-    },
-    {
-        c: "Laptop",
-        b: [
-            { name: "Apple", img: "path/to/apple.jpg" },
-            { name: "Microsoft Surface", img: "path/to/microsoft_surface.jpg" },
-            { name: "Fujitsu", img: "path/to/fujitsu.jpg" },
-            { name: "Samsung", img: "path/to/samsung.jpg" },
-            { name: "LG", img: "path/to/lg.jpg" }
-        ]
-    },
-    // Add other rows similarly with images
-];
+        const dataA = [
+            {
+                c: "Server",
+                b: [
+                    { name: "HPE", img: "path/to/hpe.jpg" },
+                    { name: "DELL", img: "path/to/dell.jpg" },
+                    { name: "Lenovo", img: "path/to/lenovo.jpg" }
+                ]
+            },
+            {
+                c: "Desktop",
+                b: [
+                    { name: "Assembled", img: "path/to/assembled.jpg" },
+                    { name: "Acer", img: "path/to/acer.jpg" },
+                    { name: "Asus", img: "path/to/asus.jpg" }
+                ]
+            },
+            {
+                c: "Laptop",
+                b: [
+                    { name: "Apple", img: "path/to/apple.jpg" },
+                    { name: "Microsoft Surface", img: "path/to/microsoft_surface.jpg" },
+                    { name: "Fujitsu", img: "path/to/fujitsu.jpg" },
+                    { name: "Samsung", img: "path/to/samsung.jpg" },
+                    { name: "LG", img: "path/to/lg.jpg" }
+                ]
+            }
+        ];
 
-let currentIndexA = 0;
-const cCarouselA = document.getElementById('carousel-column-A');
-const bCarouselA = document.getElementById('carousel-column-a');
+        let currentIndexA = 0;
+        const cCarouselA = document.getElementById('carousel-column-A');
+        const bCarouselA = document.getElementById('carousel-column-a');
 
-function displayItems(index) {
-    const currentDataA = dataA[index];
-    cCarouselA.innerHTML = `<div class="carousel-item active">${currentDataA.c}</div>`;
-    bCarouselA.innerHTML = currentDataA.b.map(item => `
-        <div class="carousel-item">
-            <img src="${item.img}" alt="${item.name}">
-            <p>${item.name}</p>
-        </div>
-    `).join('');
-}
+        function displayItemsA(index) {
+            const currentDataA = dataA[index];
+            cCarouselA.innerHTML = `<div class="carousel-item active">${currentDataA.c}</div>`;
+            bCarouselA.innerHTML = currentDataA.b.map(item => `
+                <div class="carousel-item">
+                    <img src="${item.img}" alt="${item.name}">
+                    <p>${item.name}</p>
+                </div>
+            `).join('');
+        }
 
-function nextA() {
-    currentIndexA = (currentIndexA + 1) % dataA.length;
-    displayItems(currentIndexA);
-}
+        function nextA() {
+            currentIndexA = (currentIndexA + 1) % dataA.length;
+            displayItemsA(currentIndexA);
+        }
 
-function startCarouselA() {
-    displayItems(currentIndexA);
-    setInterval(nextA, 3000); // Use nextA instead of next
-}
+        function startCarouselA() {
+            displayItemsA(currentIndexA);
+            setInterval(nextA, 3000);
+        }
 
-document.addEventListener('DOMContentLoaded', startCarouselA);
+        const dataB = [
+            {
+                c: "Server",
+                b: [
+                    { name: "HPE", img: "path/to/hpe.jpg" },
+                    { name: "DELL", img: "path/to/dell.jpg" }
+                ]
+            },
+            {
+                c: "Desktop",
+                b: [
+                    { name: "Assembled", img: "path/to/assembled.jpg" },
+                    { name: "Acer", img: "path/to/acer.jpg" }
+                ]
+            },
+            {
+                c: "Laptop",
+                b: [
+                    { name: "Apple", img: "path/to/apple.jpg" },
+                    { name: "Microsoft Surface", img: "path/to/microsoft_surface.jpg" }
+                ]
+            }
+        ];
 
+        let currentIndexB = 0;
+        const cCarouselB = document.getElementById('carousel-column-B');
+        const bCarouselB = document.getElementById('carousel-column-b');
 
+        function displayItemsB(index) {
+            const currentDataB = dataB[index];
+            cCarouselB.innerHTML = `<div class="carousel-item active">${currentDataB.c}</div>`;
+            bCarouselB.innerHTML = currentDataB.b.map(item => `
+                <div class="carousel-item">
+                    <img src="${item.img}" alt="${item.name}">
+                    <p>${item.name}</p>
+                </div>
+            `).join('');
+        }
 
+        function nextB() {
+            currentIndexB = (currentIndexB + 1) % dataB.length;
+            displayItemsB(currentIndexB);
+        }
 
+        function startCarouselB() {
+            displayItemsB(currentIndexB);
+            setInterval(nextB, 3000);
+        }
 
+        const dataC = [
+            {
+                c: "Server",
+                b: [
+                    { name: "HPE", img: "path/to/hpe.jpg" }
+                ]
+            },
+            {
+                c: "Desktop",
+                b: [
+                    { name: "Assembled", img: "path/to/assembled.jpg" }
+                ]
+            },
+            {
+                c: "Laptop",
+                b: [
+                    { name: "Apple", img: "path/to/apple.jpg" }
+                ]
+            }
+        ];
 
-const dataB = [
-    {
-        c: "Server",
-        b: [
-            { name: "HPE", img: "path/to/hpe.jpg" },
-            { name: "DELL", img: "path/to/dell.jpg" },
-            // { name: "Lenovo", img: "path/to/lenovo.jpg" }
-        ]
-    },
-    {
-        c: "Desktop",
-        b: [
-            { name: "Assembled", img: "path/to/assembled.jpg" },
-            { name: "Acer", img: "path/to/acer.jpg" },
-            // { name: "Asus", img: "path/to/asus.jpg" }
-        ]
-    },
-    {
-        c: "Laptop",
-        b: [
-            { name: "Apple", img: "path/to/apple.jpg" },
-            { name: "Microsoft Surface", img: "path/to/microsoft_surface.jpg" },
-            // { name: "Fujitsu", img: "path/to/fujitsu.jpg" },
-            // { name: "Samsung", img: "path/to/samsung.jpg" },
-            // { name: "LG", img: "path/to/lg.jpg" }
-        ]
-    },
-    // Add other rows similarly with images
-];
+        let currentIndexC = 0;
+        const cCarouselC = document.getElementById('carousel-column-C');
+        const bCarouselC = document.getElementById('carousel-column-c');
 
-let currentIndexB = 0;
-const cCarouselB = document.getElementById('carousel-column-B');
-const bCarouselB = document.getElementById('carousel-column-b');
+        function displayItemsC(index) {
+            const currentDataC = dataC[index];
+            cCarouselC.innerHTML = `<div class="carousel-item active">${currentDataC.c}</div>`;
+            bCarouselC.innerHTML = currentDataC.b.map(item => `
+                <div class="carousel-item">
+                    <img src="${item.img}" alt="${item.name}">
+                    <p>${item.name}</p>
+                </div>
+            `).join('');
+        }
 
-function displayItemsB(index) {
-    const currentDataB = dataB[index];
-    cCarouselB.innerHTML = `<div class="carousel-item active">${currentDataB.c}</div>`;
-    bCarouselB.innerHTML = currentDataB.b.map(item => `
-        <div class="carousel-item">
-            <img src="${item.img}" alt="${item.name}">
-            <p>${item.name}</p>
-        </div>
-    `).join('');
-}
+        function nextC() {
+            currentIndexC = (currentIndexC + 1) % dataC.length;
+            displayItemsC(currentIndexC);
+        }
 
-function nextB() {
-    currentIndexB = (currentIndexB + 1) % dataB.length;
-    displayItems(currentIndexB);
-}
+        function startCarouselC() {
+            displayItemsC(currentIndexC);
+            setInterval(nextC, 3000);
+        }
 
-function startCarouselB() {
-    displayItems(currentIndexB);
-    setInterval(nextB, 3000); // Use nextA instead of next
-}
-
-document.addEventListener('DOMContentLoaded', startCarouselB);
-
-
-
-
-
-
-
-
-
-
-const dataC = [
-    {
-        c: "Server",
-        b: [
-            { name: "HPE", img: "path/to/hpe.jpg" },
-            // { name: "DELL", img: "path/to/dell.jpg" },
-            // { name: "Lenovo", img: "path/to/lenovo.jpg" }
-        ]
-    },
-    {
-        c: "Desktop",
-        b: [
-            { name: "Assembled", img: "path/to/assembled.jpg" },
-            // { name: "Acer", img: "path/to/acer.jpg" },
-            // { name: "Asus", img: "path/to/asus.jpg" }
-        ]
-    },
-    {
-        c: "Laptop",
-        b: [
-            { name: "Apple", img: "path/to/apple.jpg" },
-            // { name: "Microsoft Surface", img: "path/to/microsoft_surface.jpg" },
-            // { name: "Fujitsu", img: "path/to/fujitsu.jpg" },
-            // { name: "Samsung", img: "path/to/samsung.jpg" },
-            // { name: "LG", img: "path/to/lg.jpg" }
-        ]
-    },
-    // Add other rows similarly with images
-];
-
-let currentIndexC = 0;
-const cCarouselC = document.getElementById('carousel-column-C');
-const bCarouselC = document.getElementById('carousel-column-c');
-
-function displayItemsC(index) {
-    const currentDataC = data[index];
-    cCarouselC.innerHTML = `<div class="carousel-item active">${currentDataC.c}</div>`;
-    bCarouselC.innerHTML = currentDataC.b.map(item => `
-        <div class="carousel-item">
-            <img src="${item.img}" alt="${item.name}">
-            <p>${item.name}</p>
-        </div>
-    `).join('');
-}
-
-function nextC() {
-    currentIndexC = (currentIndexC + 1) % dataC.length;
-    displayItems(currentIndexC);
-}
-
-function startCarouselC() {
-    displayItems(currentIndexC);
-    setInterval(nextC, 3000); // Use nextA instead of next
-}
-
-document.addEventListener('DOMContentLoaded', startCarouselC);
-
-
-
-
-
-
-
-
+        document.addEventListener('DOMContentLoaded', () => {
+            startCarouselA();
+            startCarouselB();
+            startCarouselC();
+        });
     </script>
 </body>
 </html>
