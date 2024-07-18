@@ -147,16 +147,17 @@ function displayItems(index) {
 }
 
 function nextA() {
-    currentIndexA = (currentIndexA + 1) % data.length;
+    currentIndexA = (currentIndexA + 1) % dataA.length;
     displayItems(currentIndexA);
 }
 
 function startCarouselA() {
     displayItems(currentIndexA);
-    setInterval(next, 3000); // Change item every 3 seconds
+    setInterval(nextA, 3000); // Use nextA instead of next
 }
 
 document.addEventListener('DOMContentLoaded', startCarouselA);
+
 
 
 
@@ -208,16 +209,17 @@ function displayItemsB(index) {
 }
 
 function nextB() {
-    currentIndexB = (currentIndexB + 1) % data.length;
+    currentIndexB = (currentIndexB + 1) % dataB.length;
     displayItems(currentIndexB);
 }
 
 function startCarouselB() {
     displayItems(currentIndexB);
-    setInterval(next, 3000); // Change item every 3 seconds
+    setInterval(nextB, 3000); // Use nextA instead of next
 }
 
 document.addEventListener('DOMContentLoaded', startCarouselB);
+
 
 
 
@@ -232,26 +234,26 @@ const dataC = [
         c: "Server",
         b: [
             { name: "HPE", img: "path/to/hpe.jpg" },
-            { name: "DELL", img: "path/to/dell.jpg" },
-            { name: "Lenovo", img: "path/to/lenovo.jpg" }
+            // { name: "DELL", img: "path/to/dell.jpg" },
+            // { name: "Lenovo", img: "path/to/lenovo.jpg" }
         ]
     },
     {
         c: "Desktop",
         b: [
             { name: "Assembled", img: "path/to/assembled.jpg" },
-            { name: "Acer", img: "path/to/acer.jpg" },
-            { name: "Asus", img: "path/to/asus.jpg" }
+            // { name: "Acer", img: "path/to/acer.jpg" },
+            // { name: "Asus", img: "path/to/asus.jpg" }
         ]
     },
     {
         c: "Laptop",
         b: [
             { name: "Apple", img: "path/to/apple.jpg" },
-            { name: "Microsoft Surface", img: "path/to/microsoft_surface.jpg" },
-            { name: "Fujitsu", img: "path/to/fujitsu.jpg" },
-            { name: "Samsung", img: "path/to/samsung.jpg" },
-            { name: "LG", img: "path/to/lg.jpg" }
+            // { name: "Microsoft Surface", img: "path/to/microsoft_surface.jpg" },
+            // { name: "Fujitsu", img: "path/to/fujitsu.jpg" },
+            // { name: "Samsung", img: "path/to/samsung.jpg" },
+            // { name: "LG", img: "path/to/lg.jpg" }
         ]
     },
     // Add other rows similarly with images
@@ -273,16 +275,17 @@ function displayItemsC(index) {
 }
 
 function nextC() {
-    currentIndexC = (currentIndexC + 1) % data.length;
+    currentIndexC = (currentIndexC + 1) % dataC.length;
     displayItems(currentIndexC);
 }
 
 function startCarouselC() {
     displayItems(currentIndexC);
-    setInterval(next, 3000); // Change item every 3 seconds
+    setInterval(nextC, 3000); // Use nextA instead of next
 }
 
 document.addEventListener('DOMContentLoaded', startCarouselC);
+
 
 
 
